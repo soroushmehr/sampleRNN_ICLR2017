@@ -1,0 +1,35 @@
+download$ for f in *; do ffmpeg -i $f 2>&1 | grep Duration; done
+  Duration: 00:22:18.52, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:15:13.07, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:13:44.23, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:21:17.55, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:24:03.82, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:23:00.14, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:21:24.58, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:07:09.15, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:07:20.90, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:09:58.42, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:10:17.88, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:22:07.47, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:09:47.16, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:08:31.91, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:07:00.63, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:12:31.47, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:19:19.51, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:40:38.57, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:26:01.98, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:13:57.26, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:16:23.42, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:24:17.95, start: 0.025057, bitrate: 137 kb/s
+  Duration: 00:17:26.14, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:23:03.66, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:20:31.32, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:18:35.52, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:25:45.52, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:27:36.38, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:16:26.45, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:11:07.99, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:24:12.24, start: 0.000000, bitrate: 320 kb/s
+  Duration: 00:18:32.30, start: 0.000000, bitrate: 320 kb/s
+
+  560 minutes total
