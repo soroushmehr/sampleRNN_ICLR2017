@@ -1,8 +1,3 @@
-# TODO: Implement 'a-law' Q_TYPE
-# TODO: Fruits dataset instead of Onom for final release.
-# TODO: Batch size should be a factor of set size.
-#       (especially important for Valid and Test sets)
-# TODO: Code refactoring (after the needs for all the models have been met)
 """
 RNN Vocal Generation Model
 
@@ -19,9 +14,6 @@ import os
 import glob
 
 __base = [
-    ('Helios', '/scratch/jvb-000-aa/mehris/datasets'),
-    ('Guillimin', '/gs/scratch/mehris/datasets'),
-    ('Hades', '/RQexec/mehris/datasets'),
     ('Kundan_Local', '/data/lisatmp4/kumarkun/Sounds'),
     ('Local', '/Tmp/mehris'),  # put at the end
 ]
@@ -167,25 +159,6 @@ def __make_random_batches(inp_list, batch_size):
     return batches
 
 ### BLIZZ DATASET LOADER ###
-#def __read_blizz(start, end):
-#    """
-#    - Read all the files from blizz.
-#    - Separate last part as test. (See __read_onom)
-#    - Then shuffle the expected part.
-#
-#    :todo:
-#        - Check the number of files
-#    """
-#    # Check if valid/test are also available. If not, raise.
-#    find_dataset(__valid(__blizz_file))
-#    find_dataset(__test(__blizz_file))
-#    data_path = find_dataset(__train(__blizz_file))
-#    files = numpy.load(data_path)
-#    __fixed_shuffle(files)
-#    paths = paths[start:end]
-#    # paths is a 'list' of 'path strings' here
-#    return paths
-
 def __blizz_feed_epoch(files,
                        batch_size,
                        seq_len,
@@ -273,19 +246,6 @@ def blizz_train_feed_epoch(*args):
     3*256
     3*256
 
-    Previously:
-    141,867 (315 hours) in total
-    With batch_size = 128:
-        141,824 (315 hours) in total
-        139,264 (98%, 309 hours)for training set
-        1,280 (1%, 2.85 hours) for validation set
-        1,280 (1%, 2.85 hours) for test set
-
-    Note:
-        Despite the small size of validation and test set in compare to
-        training set, they are already quite sizable considering the model
-        is running at audio sample level.
-
     :returns:
         A generator yielding (subbatch, reset, submask)
     """
@@ -320,29 +280,6 @@ def blizz_test_feed_epoch(*args):
 
 
 ### MUSIC DATASET LOADER ###
-#def __read_music(start, end):
-#    """
-#    - Read all the files from music.
-#    - Separate last part as test/valid. (See __read_onom)
-#    - Then shuffle the expected part.
-#
-#    :todo:
-#        - Check the number of files
-#    """
-#    data_path = __music_data_path
-#    # Ignore! Test for local machines:
-#    if not os.path.exists(data_path):
-#        print "\nTrying Helios path...",
-#        data_path = '/scratch/jvb-000-aa/mehris/datasets/music/parts'
-#        if not os.path.exists(data_path):
-#            print "\nRunning on local machines for testing... Music datapath changed!",
-#            data_path = '/Tmp/mehris/music/parts'
-#    paths = sorted(glob.glob(data_path+"/*.flac"))
-#    __fixed_shuffle(paths)
-#    paths = paths[start:end]
-#    # paths is a 'list' of 'path strings' here
-#    return paths
-
 def __music_feed_epoch(files,
                        batch_size,
                        seq_len,
@@ -555,11 +492,6 @@ def huck_train_feed_epoch(*args):
     20.48hrs 36*256
     3*256
     3*256
-
-    Note:
-        Despite the small size of validation and test set in compare to
-        training set, they are already quite sizable considering the model
-        is running at audio sample level.
 
     :returns:
         A generator yielding (subbatch, reset, submask)
