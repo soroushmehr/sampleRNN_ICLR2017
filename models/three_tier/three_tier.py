@@ -184,7 +184,7 @@ STOP_ITERS = 100000 # Stop after this many iterations
 PRINT_TIME = 90*60 # Print cost, generate samples, save model checkpoint every N seconds.
 STOP_TIME = 60*60*24*3 # Stop after this many seconds of actual training (not including time req'd to generate samples etc.)
 N_SEQS = 20  # Number of samples to generate every time monitoring.
-RESULTS_DIR = '/Tmp/mehris/results_3t'
+RESULTS_DIR = 'results_3t'
 FOLDER_PREFIX = os.path.join(RESULTS_DIR, tag)
 Q_ZERO = numpy.int32(Q_LEVELS//2) # Discrete value correponding to zero amplitude
 
