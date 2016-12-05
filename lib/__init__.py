@@ -391,7 +391,7 @@ def create_logging_folders(path):
     Handle structure of folders and naming here instead of training file.
 
     :todo:
-        - Duh. Implement!
+        - Implement!
     """
     pass
 
