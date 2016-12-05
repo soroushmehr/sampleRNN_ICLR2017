@@ -164,7 +164,7 @@ PRINT_TIME = 90*60 # Print cost, generate samples, save model checkpoint every N
 STOP_TIME = 60*60*24*3 # Stop after this many seconds of actual training (not including time req'd to generate samples etc.)
 N_SEQS = 20  # Number of samples to generate every time monitoring.
 # TODO:
-RESULTS_DIR = '/Tmp/mehris/results_2t'
+RESULTS_DIR = 'results_2t'
 FOLDER_PREFIX = os.path.join(RESULTS_DIR, tag)
 SEQ_LEN = N_FRAMES * FRAME_SIZE # Total length (# of samples) of each truncated BPTT sequence
 Q_ZERO = numpy.int32(Q_LEVELS//2) # Discrete value correponding to zero amplitude
