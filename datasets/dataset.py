@@ -14,8 +14,9 @@ import os
 import glob
 
 __base = [
+    ('Local', 'datasets/'),
     ('Kundan_Local', '/data/lisatmp4/kumarkun/Sounds'),
-    ('Local', '/Tmp/mehris'),  # put at the end
+    ('Soroush_Local', '/Tmp/mehris'),  # put at the end
 ]
 __blizz_file = 'Blizzard/Blizzard9k_{}.npy'  # in float16 8secs*16000samples/sec
 __music_file = 'music/music_{}.npy'  # in float16 8secs*16000samples/sec
