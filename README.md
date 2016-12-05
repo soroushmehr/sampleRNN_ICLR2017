@@ -5,7 +5,7 @@ Code accompanying the paper [SampleRNN: An Unconditional End-to-End Neural Audio
 - cuDNN 5105
 - Python 2.7.12
 - Numpy 1.11.1
-- Theano 0.8.2
+- Theano 0.8.2 (0.9 for WaveNet re-implementation)
 - Lasagne 0.2.dev1
 
 ## Datasets
