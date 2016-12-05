@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-"""WaveNets Vocal Generation Model
-
+"""
+WaveNets Audio Generation Model
 
 How-to-run example:
 
 sampleRNN$
-THEANO_FLAGS=mode=FAST_RUN,device=gpu1,floatX=float32,lib.cnmem=.95 python models/one_tier/wavent.py --dim 64 --q_levels 256 --q_type linear --which_set HUCK --batch_size 8 --wavenet_blocks 4 --dilation_layers_per_block 10 --sequence_len_to_train 1600
+THEANO_FLAGS=mode=FAST_RUN,device=gpu1,floatX=float32,lib.cnmem=.95 python models/one_tier/wavent.py --dim 64 --q_levels 256 --q_type linear --which_set MUSIC --batch_size 8 --wavenet_blocks 4 --dilation_layers_per_block 10 --sequence_len_to_train 1600
 """
 import time
 from datetime import datetime
@@ -135,7 +135,7 @@ STOP_ITERS = 100000 # Stop after this many iterations
 PRINT_TIME = 90*60 # Print cost, generate samples, save model checkpoint every N seconds.
 STOP_TIME = 60*60*60 # Stop after this many seconds of actual training (not including time req'd to generate samples etc.)
 N_SEQS = 10  # Number of samples to generate every time monitoring.
-FOLDER_PREFIX = os.path.join('/Tmp/kumarkun/wavenets/results', tag)
+FOLDER_PREFIX = os.path.join('results_wavenets', tag)
 SEQ_LEN = args.sequence_len_to_train # Total length (# of samples) of each truncated BPTT sequence
 Q_ZERO = numpy.int32(Q_LEVELS//2) # Discrete value correponding to zero amplitude
 
@@ -148,9 +148,6 @@ lowest_valid_str = 'lowest valid cost'
 corresp_test_str = 'correponding test cost'
 train_nll_str, valid_nll_str, test_nll_str = \
     'train NLL (bits)', 'valid NLL (bits)', 'test NLL (bits)'
-
-
-
 
 if args.debug:
     import warnings
@@ -359,49 +356,14 @@ if WHICH_SET == 'ONOM':
     from datasets.dataset import onom_train_feed_epoch as train_feeder
     from datasets.dataset import onom_valid_feed_epoch as valid_feeder
     from datasets.dataset import onom_test_feed_epoch  as test_feeder
-    # Not working with the new interface
-    #if args.debug:
-    #    warnings.warn('----------CHANGING ONOM DATA FEEDERS----------')
-    #    import datasets.dataset as ds
-    #    from functools import partial
-    #    train_feeder = partial(ds.__onom_feed_epoch, 0, BATCH_SIZE)
-    #    valid_feeder = partial(ds.__onom_feed_epoch, BATCH_SIZE, 2*BATCH_SIZE)
-    #    test_feeder = partial(ds.__onom_feed_epoch, 2*BATCH_SIZE, 3*BATCH_SIZE)
-    #    # For overfitting experiments to make sure the model is working
-    #    # properly, uncomment this line
-    #    #test_feeder = valid_feeder = test_feeder
-
 elif WHICH_SET == 'BLIZZ':
     from datasets.dataset import blizz_train_feed_epoch as train_feeder
     from datasets.dataset import blizz_valid_feed_epoch as valid_feeder
     from datasets.dataset import blizz_test_feed_epoch  as test_feeder
-    # Not working with the new interface
-    #if args.debug:
-    #    warnings.warn('----------CHANGING BLIZZ DATA FEEDERS----------')
-    #    import datasets.dataset as ds
-    #    from functools import partial
-    #    train_feeder = partial(ds.__blizz_feed_epoch, 0, BATCH_SIZE)
-    #    valid_feeder = partial(ds.__blizz_feed_epoch, BATCH_SIZE, 2*BATCH_SIZE)
-    #    test_feeder = partial(ds.__blizz_feed_epoch, 2*BATCH_SIZE, 3*BATCH_SIZE)
-    #    # For overfitting experiments to make sure the model is working
-    #    # properly, uncomment this line
-    #    #test_feeder = valid_feeder = test_feeder
-
 elif WHICH_SET == 'MUSIC':
     from datasets.dataset import music_train_feed_epoch as train_feeder
     from datasets.dataset import music_valid_feed_epoch as valid_feeder
     from datasets.dataset import music_test_feed_epoch  as test_feeder
-    # Not working with the new interface
-    #if args.debug:
-    #    warnings.warn('----------CHANGING MUSIC DATA FEEDERS----------')
-    #    import datasets.dataset as ds
-    #    from functools import partial
-    #    train_feeder = partial(ds.__music_feed_epoch, 0, BATCH_SIZE)
-    #    valid_feeder = partial(ds.__music_feed_epoch, BATCH_SIZE, 2*BATCH_SIZE)
-    #    test_feeder = partial(ds.__music_feed_epoch, 2*BATCH_SIZE, 3*BATCH_SIZE)
-    #    # For overfitting experiments to make sure the model is working
-    #    # properly, uncomment this line
-    #    #test_feeder = valid_feeder = test_feeder
 elif WHICH_SET == 'HUCK':
     from datasets.dataset import huck_train_feed_epoch as train_feeder
     from datasets.dataset import huck_valid_feed_epoch as valid_feeder
