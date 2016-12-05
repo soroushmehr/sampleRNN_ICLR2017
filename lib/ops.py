@@ -1,5 +1,5 @@
 """
-My new code base in pure Theano/Numpy as a thin wrapper
+New code base in pure Theano/Numpy as a thin wrapper
 for simple ops and layers.
 Some of the code doesn't belong to me and is gathered from
 different sources. (Ask me if the source is not indicated)
@@ -48,10 +48,8 @@ def Linear(
         biases:     whether or not to include a bias term.
         inputs:     a theano variable, or list of variables (if multiple inputs);
                     the inputs to which to apply the transform.
-        initialization: one of None, `lecun`, `glorot`, `he`, `glorot_he`, `orthogonal`
-
-    :todo:
-        - get arbitrary numpy array as initialization. Check the dims as well.
+        initialization: one of None, `lecun`, `glorot`, `he`, `glorot_he`, `orthogonal`.
+                        Also could be a numpy.ndarray of the exact same shape.
     """
     if not isinstance(input_dims, list):
         input_dims = [input_dims]
@@ -274,6 +272,9 @@ def softmax_and_sample(logits):
     ).reshape(old_shape)
     return T.argmax(samples, axis=samples.ndim-1)
 
+# TODO: Have a look at this benchmark:
+#       https://github.com/MaximumEntropy/cudnn_rnn_theano_benchmarks
+
 def __Recurrent(name, hidden_dims, step_fn, inputs, non_sequences=[], h0s=None):
     if not isinstance(inputs, list):
         inputs = [inputs]
@@ -477,7 +478,7 @@ def __LSTMStep(
 
     :todo:
         - Better initializations, especially for the weight matrices.
-        - Fix the 'concatenation' to use instead of T.concatention
+        - Fix the 'concatenation' to use instead of T.concatenation
     """
     # X_t*(U^i, U^f, U^o, U^g)
     processed_input = lib.ops.Linear(
@@ -776,27 +777,6 @@ def stackedGRU(
 #        gru_inp = gru_out
 #
 #    return gru_out, last_hiddens
-##    gru1_inp = frames
-##    # (batch_size, n_frames, frame_size+n_global_features)
-##    gru1 = lib.ops.LowMemGRU('FrameLevel.GRU1',
-##                              FRAME_SIZE,
-##                              DIM,
-##                              gru1_inp,
-##                              h0=h0[:, 0])
-##
-##    gru2_inp = gru1
-##    gru2 = lib.ops.LowMemGRU('FrameLevel.GRU2',
-##                             DIM,
-##                             DIM,
-##                             gru2_inp,
-##                             h0=h0[:, 1])
-##
-##    gru3_inp = gru2
-##    gru3 = lib.ops.LowMemGRU('FrameLevel.GRU3',
-##                             DIM,
-##                             DIM,
-##                             gru3_inp,
-##                             h0=h0[:, 2])
 
 def stackedLSTM(
         name,
@@ -1122,8 +1102,8 @@ def extend_middle_dim(_2D, num):
 def T_one_hot(inp_tensor, n_classes):
     """
     :todo:
-        - Implement other methods from here:
-        - Compare them for speed-wise for different sizes
+        - Implement other methods from here: 
+        - Compare them speed-wise for different sizes
         - Implement N_one_hot for Numpy version, with speed tests.
 
     Theano one-hot (1-of-k) from an input tensor of indecies.
@@ -1181,7 +1161,7 @@ def dil_conv_1D(
     :output:
         - output : theano tensor of shape (batch_size, output_timesteps, output_dim)
 
-    Author: Kundan Kumar (http://github.com/kundan2510)
+    :author: Kundan Kumar (http://github.com/kundan2510)
     """
 
     assert(name is not None)
@@ -1263,8 +1243,7 @@ def conv1d(
     bias = True
     ):
     """
-
-    Author: Kundan Kumar (http://github.com/kundan2510)
+    :author: Kundan Kumar (http://github.com/kundan2510)
     """
     import lasagne
 
