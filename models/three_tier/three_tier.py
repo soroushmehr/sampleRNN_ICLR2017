@@ -1,5 +1,5 @@
 """
-RNN Vocal Generation Model
+RNN Audio Generation Model
 
 Three-tier model, Quantized input
 For more info:
@@ -15,7 +15,7 @@ THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatX=float32 python -u \
 models/three_tier/three_tier.py --exp AXIS1 --seq_len 512 --big_frame_size 8 \
 --frame_size 2 --weight_norm True --emb_size 64 --skip_conn False --dim 32 \
 --n_rnn 2 --rnn_type LSTM --learn_h0 False --q_levels 16 --q_type linear \
---batch_size 128 --which_set ONOM
+--batch_size 128 --which_set MUSIC
 
 To resume add ` --resume` to the END of the EXACTLY above line. You can run the
 resume code as many time as possible, depending on the TRAIN_MODE.
@@ -136,7 +136,7 @@ args, tag = get_args()
 
 SEQ_LEN = args.seq_len # How many samples to include in each truncated BPTT pass
 #print "------------------previous SEQ_LEN:", SEQ_LEN
-# TODO:
+# TODO: test incremental training
 #SEQ_LEN = 512 + 256
 #print "---------------------------new SEQ_LEN:", SEQ_LEN
 BIG_FRAME_SIZE = args.big_frame_size # how many samples per big frame
@@ -181,12 +181,9 @@ TRAIN_MODE = 'time' # To use PRINT_TIME and STOP_TIME
 # and (STOP_ITERS, STOP_TIME), whichever happened first, for stopping exp.
 PRINT_ITERS = 10000 # Print cost, generate samples, save model checkpoint every N iterations.
 STOP_ITERS = 100000 # Stop after this many iterations
-# TODO: 90*60 -> 180*60
-PRINT_TIME = 60*180 # Print cost, generate samples, save model checkpoint every N seconds.
-STOP_TIME = 60*60*24*7 # Stop after this many seconds of actual training (not including time req'd to generate samples etc.)
-# TODO:
+PRINT_TIME = 90*60 # Print cost, generate samples, save model checkpoint every N seconds.
+STOP_TIME = 60*60*24*3 # Stop after this many seconds of actual training (not including time req'd to generate samples etc.)
 N_SEQS = 20  # Number of samples to generate every time monitoring.
-# TODO:
 RESULTS_DIR = '/Tmp/mehris/results_3t'
 FOLDER_PREFIX = os.path.join(RESULTS_DIR, tag)
 Q_ZERO = numpy.int32(Q_LEVELS//2) # Discrete value correponding to zero amplitude
@@ -232,49 +229,14 @@ if WHICH_SET == 'ONOM':
     from datasets.dataset import onom_train_feed_epoch as train_feeder
     from datasets.dataset import onom_valid_feed_epoch as valid_feeder
     from datasets.dataset import onom_test_feed_epoch  as test_feeder
-    # Not working with the new interface
-    #if args.debug:
-    #    warnings.warn('----------CHANGING ONOM DATA FEEDERS----------')
-    #    import datasets.dataset as ds
-    #    from functools import partial
-    #    train_feeder = partial(ds.__onom_feed_epoch, 0, BATCH_SIZE)
-    #    valid_feeder = partial(ds.__onom_feed_epoch, BATCH_SIZE, 2*BATCH_SIZE)
-    #    test_feeder = partial(ds.__onom_feed_epoch, 2*BATCH_SIZE, 3*BATCH_SIZE)
-    #    # For overfitting experiments to make sure the model is working
-    #    # properly, uncomment this line
-    #    #test_feeder = valid_feeder = test_feeder
-
 elif WHICH_SET == 'BLIZZ':
     from datasets.dataset import blizz_train_feed_epoch as train_feeder
     from datasets.dataset import blizz_valid_feed_epoch as valid_feeder
     from datasets.dataset import blizz_test_feed_epoch  as test_feeder
-    # Not working with the new interface
-    #if args.debug:
-    #    warnings.warn('----------CHANGING BLIZZ DATA FEEDERS----------')
-    #    import datasets.dataset as ds
-    #    from functools import partial
-    #    train_feeder = partial(ds.__blizz_feed_epoch, 0, BATCH_SIZE)
-    #    valid_feeder = partial(ds.__blizz_feed_epoch, BATCH_SIZE, 2*BATCH_SIZE)
-    #    test_feeder = partial(ds.__blizz_feed_epoch, 2*BATCH_SIZE, 3*BATCH_SIZE)
-    #    # For overfitting experiments to make sure the model is working
-    #    # properly, uncomment this line
-    #    #test_feeder = valid_feeder = test_feeder
-
 elif WHICH_SET == 'MUSIC':
     from datasets.dataset import music_train_feed_epoch as train_feeder
     from datasets.dataset import music_valid_feed_epoch as valid_feeder
     from datasets.dataset import music_test_feed_epoch  as test_feeder
-    # Not working with the new interface
-    #if args.debug:
-    #    warnings.warn('----------CHANGING MUSIC DATA FEEDERS----------')
-    #    import datasets.dataset as ds
-    #    from functools import partial
-    #    train_feeder = partial(ds.__music_feed_epoch, 0, BATCH_SIZE)
-    #    valid_feeder = partial(ds.__music_feed_epoch, BATCH_SIZE, 2*BATCH_SIZE)
-    #    test_feeder = partial(ds.__music_feed_epoch, 2*BATCH_SIZE, 3*BATCH_SIZE)
-    #    # For overfitting experiments to make sure the model is working
-    #    # properly, uncomment this line
-    #    #test_feeder = valid_feeder = test_feeder
 elif WHICH_SET == 'HUCK':
     from datasets.dataset import huck_train_feed_epoch as train_feeder
     from datasets.dataset import huck_valid_feed_epoch as valid_feeder
@@ -677,7 +639,7 @@ sample_level_generate_fn = theano.function(
 
 # Uniform [-0.5, 0.5) for half of initial state for generated samples
 # to study the behaviour of the model and also to introduce some diversity
-# to samples in a simple way.
+# to samples in a simple way. [it's disabled]
 fixed_rand_h0 = numpy.random.rand(N_SEQS//2, N_RNN, H0_MULT*DIM)
 fixed_rand_h0 -= 0.5
 fixed_rand_h0 = fixed_rand_h0.astype('float32')
@@ -700,8 +662,7 @@ def generate_and_save_samples(tag):
 
     total_time = time()
     # Generate N_SEQS' sample files, each 5 seconds long
-    # TODO:
-    N_SECS = 10  #20
+    N_SECS = 5
     LENGTH = N_SECS*BITRATE if not args.debug else 100
 
     samples = numpy.zeros((N_SEQS, LENGTH), dtype='int32')
