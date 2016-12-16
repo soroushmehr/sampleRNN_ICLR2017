@@ -1,7 +1,7 @@
 # Requires 2GB of free disk space at most.
-# Change the following address accordingly. Ends with /
-DL_PATH=/Tmp/mehris/music/download/ 
-mkdir -p $DL_PATH
+SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )
+mkdir -p download/
+DL_PATH="$SCRIPTPATH"/download/
 echo "Downloading files to "$DL_PATH""
 # See: https://blog.archive.org/2012/04/26/downloading-in-bulk-using-wget/
 wget -r -H -nc -nH --cut-dir=1 -A .ogg -R *_vbr.mp3 -e robots=off -P "$DL_PATH" -l1 -i ./itemlist.txt -B 'http://archive.org/download/'
