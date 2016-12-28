@@ -1,7 +1,7 @@
 # Requires 2GB of free disk space at most.
 SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )
-mkdir -p download/
 DL_PATH="$SCRIPTPATH"/download/
+mkdir -p "$DL_PATH"
 echo "Downloading files to "$DL_PATH""
 # See: https://blog.archive.org/2012/04/26/downloading-in-bulk-using-wget/
 wget -r -H -nc -nH --cut-dir=1 -A .ogg -R *_vbr.mp3 -e robots=off -P "$DL_PATH" -l1 -i ./itemlist.txt -B 'http://archive.org/download/'
@@ -20,4 +20,8 @@ rm "$DL_PATH"*.ogg
 
 echo "Preprocessing"
 python preprocess.py "$DL_PATH"
+echo "Done!"
+
+echo "Writing datasets"
+python _2npy.py
 echo "Done!"
