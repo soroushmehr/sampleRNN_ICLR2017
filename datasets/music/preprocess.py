@@ -7,19 +7,11 @@ os.makedirs(OUTPUT_DIR)
 print RAW_DATA_DIR
 print OUTPUT_DIR
 
-import pdb; pdb.set_trace()
-
 # Step 1: write all filenames to a list
 with open(os.path.join(OUTPUT_DIR, 'preprocess_file_list.txt'), 'w') as f:
     for dirpath, dirnames, filenames in os.walk(RAW_DATA_DIR):
         for filename in filenames:
             f.write("file '" + dirpath + '/'+ filename + "'\n")
-
-## Step 1: write all filenames to a list
-#with open(OUTPUT_DIR+'/preprocess_file_list.txt', 'w') as f:
-#    for dirpath, dirnames, filenames in os.walk(RAW_DATA_DIR):
-#        for filename in filenames:
-#            f.write(dirpath + '/'+ filename)
 
 # Step 2: concatenate everything into one massive wav file
 os.system("ffmpeg -f concat -safe 0 -i {}/preprocess_file_list.txt {}/preprocess_all_audio.wav".format(OUTPUT_DIR, OUTPUT_DIR))
