@@ -12,6 +12,7 @@ import random
 import time
 import os
 import glob
+import sys
 
 __base = [
     ('Local', 'datasets/'),
@@ -305,7 +306,11 @@ def __music_feed_epoch(files,
     reset: True or False
     """
     batches = __make_random_batches(files, batch_size)
-
+    
+    if numpy.size(batches) == 0:
+        print "Error --- Not enough data in the music related feeder file(s) "
+        sys.exit(1)  
+        
     for bch in batches:
         # batch_seq_len = length of longest sequence in the batch, rounded up to
         # the nearest SEQ_LEN.
