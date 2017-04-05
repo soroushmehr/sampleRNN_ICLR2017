@@ -1,7 +1,10 @@
 # SampleRNN
-Code accompanying the paper [SampleRNN: An Unconditional End-to-End Neural Audio Generation Model](https://openreview.net/forum?id=SkxKPDv5xl). Samples are available [here](https://soundcloud.com/samplernn/sets).
+Code accompanying the paper SampleRNN: An Unconditional End-to-End Neural Audio Generation Model [[here](https://arxiv.org/abs/1612.07837) and [here](https://openreview.net/forum?id=SkxKPDv5xl)]. Samples are available [here](https://soundcloud.com/samplernn/sets).
+
+![Unrolled model](Fig1.png?raw=true "Three-tier SampleRNN")
 
 ## Dependencies
+Extensively tested with:
 - cuDNN 5105
 - Python 2.7.12
 - Numpy 1.11.1
@@ -123,8 +126,12 @@ $ THEANO_FLAGS=mode=FAST_RUN,device=gpu0,floatX=float32 python -u models/three_t
 ## Reference
 If you are using this code, please cite the paper.
 
-SampleRNN: An Unconditional End-to-End Neural Audio Generation Model. Soroush Mehri, Kundan Kumar, Ishaan Gulrajani, Rithesh Kumar, Shubham Jain, Jose Sotelo, Aaron Courville, Yoshua Bengio, 5th International Conference on Learning Representations (ICLR 2017), submitted and under review.
+`
+@article{mehri2016samplernn, Author = {Soroush Mehri and Kundan Kumar and Ishaan Gulrajani and Rithesh Kumar and Shubham Jain and Jose Sotelo and Aaron Courville and Yoshua Bengio}, Title = {SampleRNN: An Unconditional End-to-End Neural Audio Generation Model}, Year = {2016}, Journal = {arXiv preprint arXiv:1612.07837}, }
+`
 
-[Bib to be added soon...]
+## Miscellaneous
+- Talk by Yoshua Bengio at CBMM, MIT: [Deep Generative Models for Speech and Images](https://www.youtube.com/watch?v=vEAq_sBf1CA)
+- Follow-up project: [Char2Wav: End-To-End Speech Synthesis](https://github.com/sotelo/parrot)
 
-If needed, please don't hesitate to contact us.
+If needed or have interesting related project/results, please don't hesitate to contact us.
