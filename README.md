@@ -130,6 +130,11 @@ If you are using this code, please cite the paper.
 @article{mehri2016samplernn, Author = {Soroush Mehri and Kundan Kumar and Ishaan Gulrajani and Rithesh Kumar and Shubham Jain and Jose Sotelo and Aaron Courville and Yoshua Bengio}, Title = {SampleRNN: An Unconditional End-to-End Neural Audio Generation Model}, Year = {2016}, Journal = {arXiv preprint arXiv:1612.07837}, }
 `
 
+## Torch implementation
+Thanks to [Richard Assar](https://github.com/richardassar), now we have a Torch implementation available:
+
+[https://github.com/richardassar/SampleRNN_torch](https://github.com/richardassar/SampleRNN_torch)
+
 ## Miscellaneous
 - Talk by Yoshua Bengio at CBMM, MIT: [Deep Generative Models for Speech and Images](https://www.youtube.com/watch?v=vEAq_sBf1CA)
 - Follow-up project: [Char2Wav: End-To-End Speech Synthesis](https://github.com/sotelo/parrot)
