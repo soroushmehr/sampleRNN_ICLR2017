@@ -12,7 +12,7 @@ Extensively tested with:
 - Lasagne 0.2.dev1
 
 ## Datasets
-Music dataset was created from all 32 Beethoven’s piano sonatas available publicly on [archive.org](https://archive.org/). `datasets/music` contains scripts to preprocess and build this dataset. It is also available [here](https://drive.google.com/drive/folders/0B7riq_C8aslvbWJuMGhJRFBmSHM?usp=sharing) for download. Extract the tar file and put all the numpy files in `datasets/music` directory.
+Music dataset was created from all 32 Beethoven’s piano sonatas available publicly on [archive.org](https://archive.org/). `datasets/music` contains scripts to preprocess and build this dataset. It is also available [here](https://drive.google.com/drive/folders/0B7riq_C8aslvbWJuMGhJRFBmSHM?resourcekey=0-fM79ZaHDzE4IPUMzDUK6uA&usp=sharing) for download. Extract the tar file and put all the numpy files in `datasets/music` directory.
 
 ## Training
 To train a model on an existing dataset with accelerated GPU processing, you need to run following lines from the root of `sampleRNN_ICLR2017` folder which corresponds to the best found set of hyper-paramters.
